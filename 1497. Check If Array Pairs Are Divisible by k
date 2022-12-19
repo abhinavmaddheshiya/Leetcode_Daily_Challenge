@@ -1,0 +1,36 @@
+class Solution {
+public:
+    bool canArrange(vector<int>& arr, int k) {
+        unordered_map<int, int> m;
+        for(auto a:arr)m[(a%k+k)%k]++;
+        if(m[0]%2!=0)return false;
+        for(int i=1;i<k;i++)if(m[i]!=m[k-i])return false;
+        return true;
+    }
+};
+/*class Solution {
+public:
+    bool canArrange(vector<int>& arr, int k) {
+        int n=arr.size();
+        if(n%2!=0)return false;
+        int m=0;
+        map<int, int> mp;
+        for(int i=0;i<n;i++){
+            if(mp.count(arr[i]%k)>0)mp[(arr[i]+k)%k]++;
+            else{mp[(arr[i]+k)%k]=1;}
+        }
+        map<int, int>::iterator it;
+        it=mp.begin();
+        while(it!=mp.end()){
+            int rem=it->first;
+            if(2*rem==m){
+                if(rem%2!=0)return false;
+            }
+            else{
+                if(mp[(m-rem+k)%k]!=mp[rem])return false;
+            }
+            it++;
+        }
+        return true;
+    }
+};*/
