@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<int> intersection(vector<int>& input1, vector<int>& input2) {
+        unordered_map<int,int> m;
+        vector<int> v;
+        bool flag=false;
+        for(int i=0;i<input1.size();i++){
+            for(int j=0;j<input2.size();j++){
+                if(input1[i]==input2[j]){
+                    if(m.count(input1[i])>0)flag=true;
+                    else{
+                        v.push_back(input1[i]);
+                        pair<int,int> p(input1[i], 1);
+                        m.insert(p);
+                    }
+                    input2[j]=INT_MIN;
+                    break;
+                }
+            }
+        }
+        return v;
+    }
+};
