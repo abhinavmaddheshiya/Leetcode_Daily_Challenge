@@ -1,0 +1,26 @@
+class Solution {
+public:
+    void dfs(vector<vector<int>>& rooms, vector<int>& visited, vector<int>& to_visit, int index){
+        visited[index]=1;
+        int size = rooms[index].size();
+        for(int i=0;i<size;i++){
+            to_visit[rooms[index][i]]=1;
+        }
+        for(int i=0;i<visited.size();i++){
+            if(!visited[i] && to_visit[i])dfs(rooms, visited, to_visit, i);
+        }
+    }
+    bool canVisitAllRooms(vector<vector<int>>& rooms) {
+        vector<int> visited(rooms.size(), 0);
+        vector<int> to_visit(rooms.size(), 0);
+        visited[0]=1;
+        to_visit[0]=1;
+        dfs(rooms, visited, to_visit, 0);
+        for(int i=0;i<visited.size();i++){
+            if(visited[i]==0){
+                return false;
+            }
+        }
+        return true;
+    }
+};
