@@ -1,0 +1,51 @@
+class SummaryRanges {
+public:
+    int maximum=INT_MIN;
+    int minimum=INT_MAX;
+    vector<vector<int>> disjoint;
+    unordered_map<int, int> mp;
+    //value, freq
+    SummaryRanges() {}
+    void addNum(int value) {
+        maximum = max(value, maximum);
+        minimum = min(value, minimum);
+        if(mp.count(value)){
+            return;
+        }else{
+            mp[value]=1;
+        }
+        int i=minimum;
+        int start=i;
+        int end=i;
+        disjoint.clear();
+        while(i<=maximum){
+            bool flag=false;
+            if(mp.count(i)){
+                flag=true;
+                start=i;
+                while(i<=maximum){
+                    if(mp.count(i)){end=i;}
+                    else{break;}
+                    i++;
+                }
+            }
+            if(flag){
+                vector<int> help;
+                help.push_back(start);
+                help.push_back(end);
+                disjoint.push_back(help);
+            }
+            i++;
+        }
+    }
+    
+    vector<vector<int>> getIntervals() {
+        return disjoint;        
+    }
+};
+/**
+ * Your SummaryRanges object will be instantiated and called as such:
+ * SummaryRanges* obj = new SummaryRanges();
+ * obj->addNum(value);
+ * vector<vector<int>> param_2 = obj->getIntervals();
+ */
