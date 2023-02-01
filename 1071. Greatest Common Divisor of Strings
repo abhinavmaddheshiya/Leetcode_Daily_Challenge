@@ -1,0 +1,81 @@
+class Solution {
+public:
+    void helper2(string s, vector<pair<string, bool>>& choose){
+        int len = s.length();
+        for(int z=0;z<choose.size();z++){
+                string temp = choose[z].first;
+                int leng = temp.length();
+                bool check=false;
+                for(int t=0;t<len;t+=leng){
+                    int last = s.length()-t;
+                    if(last<leng){
+                        check=true;
+                        break;
+                    }
+                    string curr = s.substr(t, leng);
+                    if(temp==curr){
+                        continue;
+                    }else{
+                        check=true;
+                        break;
+                    }
+                }
+                if(choose[z].second == true){if(!check)choose[z].second = true;
+                else{choose[z].second = false;}}
+            }
+    }
+    void helper(string s, vector<pair<string, bool>>& choose){
+        int len = s.length();
+        for(int z=0;z<choose.size();z++){
+                string temp = choose[z].first;
+                int leng = temp.length();
+                bool check=false;
+                for(int t=0;t<len;t+=leng){
+                    int last = s.length()-t;
+                    if(last<leng){
+                        check=true;
+                        break;
+                    }
+                    string curr = s.substr(t, leng);
+                    if(temp==curr){
+                        continue;
+                    }else{
+                        check=true;
+                        break;
+                    }
+                }
+                if(!check)choose[z].second = true;
+            }
+    }
+    string gcdOfStrings(string str1, string str2) {
+        string ans="";
+        int len1=str1.size();
+        int len2=str2.size();
+        bool flag1=false;
+        bool flag2=false;
+        if(len1>len2)flag2=true;
+        else{flag1=true;}
+        vector<pair<string, bool>> choose;
+        int i=1;
+        while(flag2 && i<=str2.length()){
+            choose.push_back({str2.substr(0,i), false});
+            i++;
+        }
+        i=1;
+        while(flag1 && i<=str1.length()){
+            choose.push_back({str1.substr(0,i), false});
+            i++;
+        }
+        if(flag2){
+            helper(str1, choose);
+            helper2(str2, choose);
+        }else{
+            helper(str2, choose);
+            helper2(str1, choose);
+        }
+        for(int z=choose.size()-1;z>=0;z--){
+            if(choose[z].second)return choose[z].first;
+        }
+        return ans;
+    }
+};
