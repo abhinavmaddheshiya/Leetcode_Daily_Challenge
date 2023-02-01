@@ -1,3 +1,4 @@
+1st attempt
 class Solution {
 public:
     void helper2(string s, vector<pair<string, bool>>& choose){
@@ -77,5 +78,28 @@ public:
             if(choose[z].second)return choose[z].first;
         }
         return ans;
+    }
+};
+
+2nd attempt(used hint)
+class Solution {
+public:
+    string gcdOfStrings(string str1, string str2) {
+        int l1= str1.length();
+        int l2= str2.length();
+        if(l1==0 || l2==0){
+            if(l1==0)return str2;
+            else{return str1;}
+        }
+        if(l1<l2){
+            string pattern = str1;
+            string match = str2.substr(0, l1);
+            if(match==pattern)return gcdOfStrings(str1, str2.substr(l1));
+        }else{
+            string pattern = str2;
+            string match = str1.substr(0, l2);
+            if(match==pattern)return gcdOfStrings(str1.substr(l2), str2);
+        }
+        return "";
     }
 };
