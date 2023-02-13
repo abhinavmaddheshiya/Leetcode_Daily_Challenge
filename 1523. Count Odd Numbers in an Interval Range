@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int countOdds(int low, int high) {
+        int oddlow=0;
+        int oddhigh=0;
+        if(low%2==0)oddlow = low/2;
+        else{oddlow=(low/2)+1;}
+        if(high%2==0)oddhigh = high/2;
+        else{oddhigh=(high/2)+1;}
+        int ans = oddhigh-oddlow;
+        if(low%2==1)return ans+1;
+        return ans;
+    }
+};
