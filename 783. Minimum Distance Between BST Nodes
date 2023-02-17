@@ -1,0 +1,19 @@
+class Solution {
+public:
+    void iTrav(TreeNode* root, vector<int>& inorder){
+        if(!root)return;
+        iTrav(root->left, inorder);
+        inorder.push_back(root->val);
+        iTrav(root->right, inorder);
+    }
+    int minDiffInBST(TreeNode* root) {
+        vector<int> inorder;
+        iTrav(root, inorder);
+        int minimum=INT_MAX;
+        for(int i=1;i<inorder.size();i++){
+            int currdiff=inorder[i]-inorder[i-1];
+            minimum=min(minimum, currdiff);
+        }
+        return minimum;
+    }
+};
