@@ -1,0 +1,82 @@
+class Solution {
+public:
+    bool check(int curr, vector<int>& weights, int days){
+        int capacity=curr;
+        int i=0;
+        while(i<weights.size()){
+            if(capacity-weights[i]>=0){
+                capacity-=weights[i];
+                i++;
+            }
+            else if(days!=1){
+                capacity=curr;
+                days--;
+            }
+            else
+                return false;
+        }
+        return true;
+    }
+    int shipWithinDays(vector<int>& weights, int days) {
+        int lowerlimit=0;
+        //maximum
+        int higherlimit=0;
+        //sumof weights
+        for(int i=0;i<weights.size();i++){
+            lowerlimit=max(lowerlimit, weights[i]);
+            higherlimit+=weights[i];
+        }
+        int mid=higherlimit;
+        int ans=mid;
+        while(lowerlimit<=higherlimit){
+            mid=(lowerlimit+higherlimit);
+            mid=mid>>1;
+            if(check(mid, weights, days)){
+                ans=mid;
+                higherlimit=mid-1;
+            }else{
+                lowerlimit=mid+1;
+            }
+        }
+        return ans;
+    }
+};
+/*class Solution {
+public:
+    bool check(int curr, vector<int>& weights, int days){
+        int i=0;
+        while(days--){
+            int capacity=curr;
+            for(;i<weights.size();i++){
+                if(capacity-weights[i]>=0)capacity-=weights[i];
+                else
+                    break;
+            }
+            if(i==weights.size())return true;
+        }
+        return false;
+    }
+    int shipWithinDays(vector<int>& weights, int days) {
+        int lowerlimit=0;
+        //maximum
+        int higherlimit=0;
+        //sumof weights
+        for(int i=0;i<weights.size();i++){
+            lowerlimit=max(lowerlimit, weights[i]);
+            higherlimit+=weights[i];
+        }
+        int mid=higherlimit;
+        int ans=mid;
+        while(lowerlimit<=higherlimit){
+            mid=(lowerlimit+higherlimit);
+            mid=mid>>1;
+            if(check(mid, weights, days)){
+                ans=mid;
+                higherlimit=mid-1;
+            }else{
+                lowerlimit=mid+1;
+            }
+        }
+        return ans;
+    }
+};*/
