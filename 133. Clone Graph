@@ -1,0 +1,18 @@
+class Solution {
+public:
+    Node* cloneGraph(Node* node) {
+        if(!node)return NULL;
+        Node* clone=new Node(node->val);
+        visit[node]=clone;
+        for(auto i:node->neighbors){
+            if(visit.find(i)==visit.end()){
+                clone->neighbors.push_back(cloneGraph(i));
+            }else{
+                clone->neighbors.push_back(visit[i]);
+            }
+        }
+        return clone;
+    }
+private:
+    unordered_map<Node*, Node*> visit;
+};
