@@ -1,0 +1,33 @@
+class Solution {
+public:
+    string frequencySort(string s) {
+        unordered_map<char, int> charFreq;
+        int n = s.size();
+        for(int i=0;i<n;i++){
+            charFreq[s[i]]++;
+        }
+        unordered_map<int, vector<char>> freqArr;
+        priority_queue<int> pq;
+        for(auto it:charFreq){
+            int freq = it.second;
+            char c = it.first;
+            if(freqArr.find(freq)!=freqArr.end()){
+                freqArr[freq].push_back(c);
+            }else{
+                freqArr[freq].push_back(c);
+                pq.push(freq);
+            }
+        }
+        string ans = "";
+        while(!pq.empty()){
+            int freq = pq.top();
+            pq.pop();
+            for(auto c:freqArr[freq]){
+                for(int i=0;i<freq;i++){
+                    ans+=c;
+                }
+            }
+        }
+        return ans;
+    }
+};
