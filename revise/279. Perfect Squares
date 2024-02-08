@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int solve(int n, vector<int>& mem){
+        if(n==0)return 0;
+        if(mem[n]!=-1)return mem[n];
+        int curr=n;
+        for(int i=1;i<=(int)sqrt(n);i++){
+            curr = min(curr, 1+solve(n-(i*i), mem));
+        }
+        return mem[n]=curr;
+    }
+    int numSquares(int n) {
+        vector<int> mem(n+1, -1);
+        return solve(n, mem);
+    }
+};
