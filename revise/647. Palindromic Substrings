@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int countSubstrings(string s) {
+        int n = s.size(), cnt=0;
+        //odd length palin
+        for(int ind=0;ind<n;ind++){
+            int start=ind-1, end=ind+1;
+            cnt++;
+            while(start>=0 && end<n){
+                if(s[start]==s[end])cnt++;
+                else break;
+                start--, end++;
+            }
+        }
+        //even length palin
+        for(int ind=0;ind<n;ind++){
+            int start=ind, end=ind+1;
+            if(s[start]==s[end])cnt++;
+            else continue;
+            start--, end++;
+            while(start>=0 && end<n){
+                if(s[start]==s[end])cnt++;
+                else break;
+                start--, end++;
+            }
+        }
+        return cnt;
+    }
+};
