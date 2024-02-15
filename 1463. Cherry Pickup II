@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int solve(int r, int c1, int c2, vector<vector<int>>& grid, int row, int col, 
+    vector<vector<vector<int>>>& mem) {
+        if(r==row-1){
+            if(c1==c2)return mem[r][c1][c2] = grid[r][c1];
+            return mem[r][c1][c2] = grid[r][c1] + grid[r][c2];
+        }
+        if(mem[r][c1][c2]!=-1)return mem[r][c1][c2];
+        int ans = grid[r][c1]+grid[r][c2], maxi=0;
+        if(c1==c2)ans-=grid[r][c1];
+        for(int i=-1;i<=1;i++){
+            for(int j=-1;j<=1;j++){
+                if(c1+i>=0 && c1+i<col && c2+j>=0 && c2+j<col){
+                    maxi = max(maxi, solve(r+1, c1+i, c2+j, grid, row, col, mem));
+                }
+            }
+        }
+        return mem[r][c1][c2] = ans+maxi;
+    }
+    int cherryPickup(vector<vector<int>>& grid) {
+        int n = grid.size(), m = grid[0].size();
+        vector<vector<vector<int>>> mem(n, vector<vector<int>>(m, vector<int>(m, -1)));
+        return solve(0, 0, m-1, grid, n, m, mem);
+    }
+};
