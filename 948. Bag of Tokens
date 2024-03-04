@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int bagOfTokensScore(vector<int>& tokens, int power) {
+        priority_queue<int> mx;
+        for(auto token:tokens){
+            mx.push(token);
+        }
+        deque<int> dq;
+        while(!mx.empty()){
+            dq.push_front(mx.top());
+            mx.pop();
+        }
+        int ans = 0;
+        int score = 0;
+        while(!dq.empty()){
+            int mini = dq.front(), maxi = dq.back();
+            if(mini>power && score==0)break;
+            if(mini<=power){
+                score++;
+                power -= mini;
+                dq.pop_front();
+            }else if(score){
+                score--;
+                power += maxi;
+                dq.pop_back();
+            }else break;
+            ans = max(ans, score);
+        }
+        return ans;
+    }
+};
